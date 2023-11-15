@@ -1,6 +1,7 @@
 import fractions
 import math
 import random
+import time
 from typing import Callable, Optional
 
 import cirq
@@ -159,6 +160,11 @@ def find_factor(
         Нетривиальный коэффциент факторизации числа n или None, если не удалось найти  .
         Коэффициент факторизации k называют тривилальный, если k равен 1 или n.
     """
+    if order_finder == naive_order_finder:
+        print("Классический метод факторизации: ")
+    if order_finder == quantum_order_finder:
+        print("Квантовый метод факторизации: ")
+
     # Если число n простое, то у него нет нетривиального коэффициента.
     if sympy.isprime(n):
         print("n простое!")
@@ -208,11 +214,14 @@ def find_factor(
 
 
 if __name__ == '__main__':
-    n = 3 * 7
+    n = 3 * 11
+    start = time.time()
     p = find_factor(n, order_finder=quantum_order_finder)
     q = n // p
+    end = time.time()
 
     print("Факторизация n = pq =", n)
     print("p =", p)
     print("q =", q)
     print("Результат pq равен n?", p * q == n)
+    print(f"Выполнено за {end - start:.5f} секунд(ы)")
